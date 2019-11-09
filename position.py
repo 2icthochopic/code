@@ -1,9 +1,9 @@
-# Updated version of pSize
-# Added ability to input any number of Take Profits
-# Calculates average TP and Reward/Risk
+# trade position size calculator
+# takes Take-Profit price(s), stop-loss price, total account value (equity), and risk appetite to calculate:
+# Average Take Profit Price, Reward/Risk Ratio, # of contracts at what leverage, and maximum drawdown.
 print("---------------------")
-avgEntry = float(input('Average Entry? '))
-stopLoss = float(input('Stop Loss? '))
+avgEntry = float(input('Average Entry Price? '))
+stopLoss = float(input('Stop Loss Price? '))
 print("---------------------")
 tps = int(input('# of Take Profits? '))
 print("---------------------")
