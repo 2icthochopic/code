@@ -1,0 +1,2056 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Collecting turicreate\n",
+      "  Using cached https://files.pythonhosted.org/packages/d8/28/8f2c51bcc1c4cb7f81dee1e8460d16410a7a9a6402ab9432e9652f2f159a/turicreate-6.0-cp37-cp37m-macosx_10_12_intel.macosx_10_12_x86_64.macosx_10_13_intel.macosx_10_13_x86_64.macosx_10_14_intel.macosx_10_14_x86_64.whl\n",
+      "Processing /Users/JonathanMac/Library/Caches/pip/wheels/80/34/1c/3967380d9676d162cb59513bd9dc862d0584e045a162095606/prettytable-0.7.2-cp37-none-any.whl\n",
+      "Collecting tensorflow>=2.0.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/35/55/a0dbd642e68e68f3e309d1413abdc0a7aa7e1534c79c0fc2501defb864ac/tensorflow-2.1.0-cp37-cp37m-macosx_10_11_x86_64.whl\n",
+      "Requirement already satisfied: six>=1.10.0 in /usr/local/lib/python3.7/site-packages (from turicreate) (1.14.0)\n",
+      "Processing /Users/JonathanMac/Library/Caches/pip/wheels/ff/4f/ed/2e6c676c23efe5394bb40ade50662e90eb46e29b48324c5f9b/resampy-0.2.1-cp37-none-any.whl\n",
+      "Requirement already satisfied: decorator>=4.0.9 in /usr/local/lib/python3.7/site-packages (from turicreate) (4.4.1)\n",
+      "Collecting numpy==1.16.4\n",
+      "  Using cached https://files.pythonhosted.org/packages/6b/be/608b7f72b851472388eafc010a5d46dae5d41610d0ac5df4c98c2ed1b865/numpy-1.16.4-cp37-cp37m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl\n",
+      "Collecting scipy>=1.1.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/85/7a/ae480be23b768910a9327c33517ced4623ba88dc035f9ce0206657c353a9/scipy-1.4.1-cp37-cp37m-macosx_10_6_intel.whl\n",
+      "Collecting requests>=2.9.1\n",
+      "  Using cached https://files.pythonhosted.org/packages/51/bd/23c926cd341ea6b7dd0b2a00aba99ae0f828be89d72b2190f27c11d4b7fb/requests-2.22.0-py2.py3-none-any.whl\n",
+      "Collecting coremltools==3.1\n",
+      "  Using cached https://files.pythonhosted.org/packages/c9/86/e7a0e75fd70d5d13d1f8e4b85fa58a13d919e1b4002150f9d4113c907e34/coremltools-3.1-cp37-none-macosx_10_14_intel.whl\n",
+      "Collecting pillow>=5.2.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/0c/43/b52847e473ac6cbd10a749b63018b2bb08b55c6e1a1923872361443906de/Pillow-7.0.0-cp37-cp37m-macosx_10_6_intel.whl\n",
+      "Collecting pandas>=0.23.2\n",
+      "  Using cached https://files.pythonhosted.org/packages/16/b5/bab3477466a4d9e705d40829ac65683155e7977acbc07f05b06fabded1be/pandas-0.25.3-cp37-cp37m-macosx_10_9_x86_64.whl\n",
+      "Collecting keras-preprocessing>=1.1.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/28/6a/8c1f62c37212d9fc441a7e26736df51ce6f0e38455816445471f10da4f0a/Keras_Preprocessing-1.1.0-py2.py3-none-any.whl\n",
+      "Collecting tensorflow-estimator<2.2.0,>=2.1.0rc0\n",
+      "  Using cached https://files.pythonhosted.org/packages/18/90/b77c328a1304437ab1310b463e533fa7689f4bfc41549593056d812fab8e/tensorflow_estimator-2.1.0-py2.py3-none-any.whl\n",
+      "Collecting wrapt>=1.11.1\n",
+      "  Using cached https://files.pythonhosted.org/packages/23/84/323c2415280bc4fc880ac5050dddfb3c8062c2552b34c2e512eb4aa68f79/wrapt-1.11.2.tar.gz\n",
+      "Requirement already satisfied: wheel>=0.26; python_version >= \"3\" in /usr/local/lib/python3.7/site-packages (from tensorflow>=2.0.0->turicreate) (0.33.6)\n",
+      "Collecting google-pasta>=0.1.6\n",
+      "  Using cached https://files.pythonhosted.org/packages/c3/fd/1e86bc4837cc9a3a5faf3db9b1854aa04ad35b5f381f9648fbe81a6f94e4/google_pasta-0.1.8-py3-none-any.whl\n",
+      "Processing /Users/JonathanMac/Library/Caches/pip/wheels/5c/2e/7e/a1d4d4fcebe6c381f378ce7743a3ced3699feb89bcfbdadadd/gast-0.2.2-cp37-none-any.whl\n",
+      "Processing /Users/JonathanMac/Library/Caches/pip/wheels/8e/28/49/fad4e7f0b9a1227708cbbee4487ac8558a7334849cb81c813d/absl_py-0.9.0-cp37-none-any.whl\n",
+      "Processing /Users/JonathanMac/Library/Caches/pip/wheels/7c/06/54/bc84598ba1daf8f970247f550b175aaaee85f68b4b0c5ab2c6/termcolor-1.1.0-cp37-none-any.whl\n",
+      "Collecting keras-applications>=1.0.8\n",
+      "  Using cached https://files.pythonhosted.org/packages/71/e3/19762fdfc62877ae9102edf6342d71b28fbfd9dea3d2f96a882ce099b03f/Keras_Applications-1.0.8-py3-none-any.whl\n",
+      "Collecting grpcio>=1.8.6\n",
+      "  Using cached https://files.pythonhosted.org/packages/df/f1/98449d2c173c6324220ab1672203ad09ac7345f023dc62eb0786ad2a0df6/grpcio-1.26.0-cp37-cp37m-macosx_10_9_x86_64.whl\n",
+      "Collecting protobuf>=3.8.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/2d/09/176fcab8aab35065e9f973c0ef093e8e296fb4d8d4e3ef2ed4fd2e6ff2f2/protobuf-3.11.2-cp37-cp37m-macosx_10_9_x86_64.whl\n",
+      "Collecting astor>=0.6.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/c3/88/97eef84f48fa04fbd6750e62dcceafba6c63c81b7ac1420856c8dcc0a3f9/astor-0.8.1-py2.py3-none-any.whl\n",
+      "Processing /Users/JonathanMac/Library/Caches/pip/wheels/2c/b1/94/43d03e130b929aae7ba3f8d15cbd7bc0d1cb5bb38a5c721833/opt_einsum-3.1.0-cp37-none-any.whl\n",
+      "Collecting tensorboard<2.2.0,>=2.1.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/40/23/53ffe290341cd0855d595b0a2e7485932f473798af173bbe3a584b99bb06/tensorboard-2.1.0-py3-none-any.whl\n",
+      "Collecting numba>=0.32\n",
+      "  Using cached https://files.pythonhosted.org/packages/8c/2e/a650b9013d692845e619e666f6a16ce1a4f44a47254c333214290a8611ae/numba-0.47.0-cp37-cp37m-macosx_10_9_x86_64.whl\n",
+      "Collecting chardet<3.1.0,>=3.0.2\n",
+      "  Using cached https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl\n",
+      "Collecting idna<2.9,>=2.5\n",
+      "  Using cached https://files.pythonhosted.org/packages/14/2c/cd551d81dbe15200be1cf41cd03869a46fe7226e7450af7a6545bfc474c9/idna-2.8-py2.py3-none-any.whl\n",
+      "Collecting certifi>=2017.4.17\n",
+      "  Using cached https://files.pythonhosted.org/packages/b9/63/df50cac98ea0d5b006c55a399c3bf1db9da7b5a24de7890bc9cfd5dd9e99/certifi-2019.11.28-py2.py3-none-any.whl\n",
+      "Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/e8/74/6e4f91745020f967d09332bb2b8b9b10090957334692eb88ea4afe91b77f/urllib3-1.25.8-py2.py3-none-any.whl (125kB)\n",
+      "\u001b[K     |████████████████████████████████| 133kB 2.9MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting pytz>=2017.2\n",
+      "  Using cached https://files.pythonhosted.org/packages/e7/f9/f0b53f88060247251bf481fa6ea62cd0d25bf1b11a87888e53ce5b7c8ad2/pytz-2019.3-py2.py3-none-any.whl\n",
+      "Requirement already satisfied: python-dateutil>=2.6.1 in /usr/local/lib/python3.7/site-packages (from pandas>=0.23.2->turicreate) (2.8.1)\n",
+      "Collecting h5py\n",
+      "  Using cached https://files.pythonhosted.org/packages/1a/8b/4d01ae9a9d50a0bcc7b0b9aae41785d8d9de6fa9bba04dc20b1582181d2d/h5py-2.10.0-cp37-cp37m-macosx_10_6_intel.whl\n",
+      "Requirement already satisfied: setuptools in /usr/local/lib/python3.7/site-packages (from protobuf>=3.8.0->tensorflow>=2.0.0->turicreate) (42.0.2)\n",
+      "Collecting google-auth<2,>=1.6.3\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/1c/6d/7aae38a9022f982cf8167775c7fc299f203417b698c27080ce09060bba07/google_auth-1.11.0-py2.py3-none-any.whl (76kB)\n",
+      "\u001b[K     |████████████████████████████████| 81kB 6.4MB/s eta 0:00:011\n",
+      "\u001b[?25hCollecting werkzeug>=0.11.15\n",
+      "\u001b[?25l  Downloading https://files.pythonhosted.org/packages/c2/e4/a859d2fe516f466642fa5c6054fd9646271f9da26b0cac0d2f37fc858c8f/Werkzeug-0.16.1-py2.py3-none-any.whl (327kB)\n",
+      "\u001b[K     |████████████████████████████████| 327kB 3.6MB/s eta 0:00:01\n",
+      "\u001b[?25hCollecting markdown>=2.6.8\n",
+      "  Using cached https://files.pythonhosted.org/packages/c0/4e/fd492e91abdc2d2fcb70ef453064d980688762079397f779758e055f6575/Markdown-3.1.1-py2.py3-none-any.whl\n",
+      "Collecting google-auth-oauthlib<0.5,>=0.4.1\n",
+      "  Using cached https://files.pythonhosted.org/packages/7b/b8/88def36e74bee9fce511c9519571f4e485e890093ab7442284f4ffaef60b/google_auth_oauthlib-0.4.1-py2.py3-none-any.whl\n",
+      "Collecting llvmlite>=0.31.0dev0\n",
+      "  Using cached https://files.pythonhosted.org/packages/6d/81/3ef1bf97adac4f200a7ff61a6c0be52f7eab9c4f8807edb494b72ec2674a/llvmlite-0.31.0-cp37-cp37m-macosx_10_9_x86_64.whl\n",
+      "Collecting pyasn1-modules>=0.2.1\n",
+      "  Using cached https://files.pythonhosted.org/packages/95/de/214830a981892a3e286c3794f41ae67a4495df1108c3da8a9f62159b9a9d/pyasn1_modules-0.2.8-py2.py3-none-any.whl\n",
+      "Collecting rsa<4.1,>=3.1.4\n",
+      "  Using cached https://files.pythonhosted.org/packages/02/e5/38518af393f7c214357079ce67a317307936896e961e35450b70fad2a9cf/rsa-4.0-py2.py3-none-any.whl\n",
+      "Collecting cachetools<5.0,>=2.0.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/08/6a/abf83cb951617793fd49c98cb9456860f5df66ff89883c8660aa0672d425/cachetools-4.0.0-py3-none-any.whl\n",
+      "Collecting requests-oauthlib>=0.7.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/a3/12/b92740d845ab62ea4edf04d2f4164d82532b5a0b03836d4d4e71c6f3d379/requests_oauthlib-1.3.0-py2.py3-none-any.whl\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Collecting pyasn1<0.5.0,>=0.4.6\n",
+      "  Using cached https://files.pythonhosted.org/packages/62/1e/a94a8d635fa3ce4cfc7f506003548d0a2447ae76fd5ca53932970fe3053f/pyasn1-0.4.8-py2.py3-none-any.whl\n",
+      "Collecting oauthlib>=3.0.0\n",
+      "  Using cached https://files.pythonhosted.org/packages/05/57/ce2e7a8fa7c0afb54a0581b14a65b56e62b5759dbc98e80627142b8a3704/oauthlib-3.1.0-py2.py3-none-any.whl\n",
+      "Building wheels for collected packages: wrapt\n",
+      "  Building wheel for wrapt (setup.py) ... \u001b[?25ldone\n",
+      "\u001b[?25h  Created wheel for wrapt: filename=wrapt-1.11.2-cp37-cp37m-macosx_10_14_x86_64.whl size=32380 sha256=2c463e19a9c81e112628115606658ab0b4d2b6b108c2a1f72e00b8ba498f2197\n",
+      "  Stored in directory: /Users/JonathanMac/Library/Caches/pip/wheels/d7/de/2e/efa132238792efb6459a96e85916ef8597fcb3d2ae51590dfd\n",
+      "Successfully built wrapt\n",
+      "Installing collected packages: prettytable, numpy, keras-preprocessing, tensorflow-estimator, wrapt, google-pasta, gast, absl-py, scipy, termcolor, h5py, keras-applications, grpcio, protobuf, astor, opt-einsum, pyasn1, pyasn1-modules, rsa, cachetools, google-auth, werkzeug, chardet, idna, certifi, urllib3, requests, markdown, oauthlib, requests-oauthlib, google-auth-oauthlib, tensorboard, tensorflow, llvmlite, numba, resampy, coremltools, pillow, pytz, pandas, turicreate\n",
+      "Successfully installed absl-py-0.9.0 astor-0.8.1 cachetools-4.0.0 certifi-2019.11.28 chardet-3.0.4 coremltools-3.1 gast-0.2.2 google-auth-1.11.0 google-auth-oauthlib-0.4.1 google-pasta-0.1.8 grpcio-1.26.0 h5py-2.10.0 idna-2.8 keras-applications-1.0.8 keras-preprocessing-1.1.0 llvmlite-0.31.0 markdown-3.1.1 numba-0.47.0 numpy-1.16.4 oauthlib-3.1.0 opt-einsum-3.1.0 pandas-0.25.3 pillow-7.0.0 prettytable-0.7.2 protobuf-3.11.2 pyasn1-0.4.8 pyasn1-modules-0.2.8 pytz-2019.3 requests-2.22.0 requests-oauthlib-1.3.0 resampy-0.2.1 rsa-4.0 scipy-1.4.1 tensorboard-2.1.0 tensorflow-2.1.0 tensorflow-estimator-2.1.0 termcolor-1.1.0 turicreate-6.0 urllib3-1.25.8 werkzeug-0.16.1 wrapt-1.11.2\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "pip install turicreate"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import turicreate as tc"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Load music data\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "song_data = tc.SFrame('song_data.sframe')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Explore data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div style=\"max-height:1000px;max-width:1500px;overflow:auto;\"><table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">user_id</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">song_id</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">listen_count</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">title</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">artist</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SOAKIMP12A8C130995</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">The Cove</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Jack Johnson</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SOBBMDR12A8C13253B</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Entre Dos Aguas</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Paco De Lucia</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SOBXHDL12A81C204C0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Stronger</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Kanye West</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SOBYHAJ12A6701BF1D</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Constellations</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Jack Johnson</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SODACBL12A8C13C273</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Learn To Fly</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Foo Fighters</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SODDNQT12A6D4F5F7E</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">5</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Apuesta Por El Rock &#x27;N&#x27;<br>Roll ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Héroes del Silencio</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SODXRTY12AB0180F3B</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Paper Gangsta</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Lady GaGa</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SOFGUAY12AB017B0A8</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Stacked Actors</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Foo Fighters</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SOFRQTD12A81C233C0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Sehr kosmisch</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Harmonia</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">b80344d063b5ccb3212f76538<br>f3d9e43d87dca9e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">SOHQWYZ12A6D4FA701</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Heaven&#x27;s gonna burn your<br>eyes ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Thievery Corporation<br>feat. Emiliana Torrini ...</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "<table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">song</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">The Cove - Jack Johnson</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Entre Dos Aguas - Paco De<br>Lucia ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Stronger - Kanye West</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Constellations - Jack<br>Johnson ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Learn To Fly - Foo<br>Fighters ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Apuesta Por El Rock &#x27;N&#x27;<br>Roll - Héroes del ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Paper Gangsta - Lady GaGa</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Stacked Actors - Foo<br>Fighters ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Sehr kosmisch - Harmonia</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Heaven&#x27;s gonna burn your<br>eyes - Thievery ...</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "[10 rows x 6 columns]<br/>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Columns:\n",
+       "\tuser_id\tstr\n",
+       "\tsong_id\tstr\n",
+       "\tlisten_count\tint\n",
+       "\ttitle\tstr\n",
+       "\tartist\tstr\n",
+       "\tsong\tstr\n",
+       "\n",
+       "Rows: 10\n",
+       "\n",
+       "Data:\n",
+       "+-------------------------------+--------------------+--------------+\n",
+       "|            user_id            |      song_id       | listen_count |\n",
+       "+-------------------------------+--------------------+--------------+\n",
+       "| b80344d063b5ccb3212f76538f... | SOAKIMP12A8C130995 |      1       |\n",
+       "| b80344d063b5ccb3212f76538f... | SOBBMDR12A8C13253B |      2       |\n",
+       "| b80344d063b5ccb3212f76538f... | SOBXHDL12A81C204C0 |      1       |\n",
+       "| b80344d063b5ccb3212f76538f... | SOBYHAJ12A6701BF1D |      1       |\n",
+       "| b80344d063b5ccb3212f76538f... | SODACBL12A8C13C273 |      1       |\n",
+       "| b80344d063b5ccb3212f76538f... | SODDNQT12A6D4F5F7E |      5       |\n",
+       "| b80344d063b5ccb3212f76538f... | SODXRTY12AB0180F3B |      1       |\n",
+       "| b80344d063b5ccb3212f76538f... | SOFGUAY12AB017B0A8 |      1       |\n",
+       "| b80344d063b5ccb3212f76538f... | SOFRQTD12A81C233C0 |      1       |\n",
+       "| b80344d063b5ccb3212f76538f... | SOHQWYZ12A6D4FA701 |      1       |\n",
+       "+-------------------------------+--------------------+--------------+\n",
+       "+-------------------------------+-------------------------------+\n",
+       "|             title             |             artist            |\n",
+       "+-------------------------------+-------------------------------+\n",
+       "|            The Cove           |          Jack Johnson         |\n",
+       "|        Entre Dos Aguas        |         Paco De Lucia         |\n",
+       "|            Stronger           |           Kanye West          |\n",
+       "|         Constellations        |          Jack Johnson         |\n",
+       "|          Learn To Fly         |          Foo Fighters         |\n",
+       "|  Apuesta Por El Rock 'N' Roll |      Héroes del Silencio      |\n",
+       "|         Paper Gangsta         |           Lady GaGa           |\n",
+       "|         Stacked Actors        |          Foo Fighters         |\n",
+       "|         Sehr kosmisch         |            Harmonia           |\n",
+       "| Heaven's gonna burn your eyes | Thievery Corporation feat.... |\n",
+       "+-------------------------------+-------------------------------+\n",
+       "+-------------------------------+\n",
+       "|              song             |\n",
+       "+-------------------------------+\n",
+       "|    The Cove - Jack Johnson    |\n",
+       "| Entre Dos Aguas - Paco De ... |\n",
+       "|     Stronger - Kanye West     |\n",
+       "| Constellations - Jack Johnson |\n",
+       "|  Learn To Fly - Foo Fighters  |\n",
+       "| Apuesta Por El Rock 'N' Ro... |\n",
+       "|   Paper Gangsta - Lady GaGa   |\n",
+       "| Stacked Actors - Foo Fighters |\n",
+       "|    Sehr kosmisch - Harmonia   |\n",
+       "| Heaven's gonna burn your e... |\n",
+       "+-------------------------------+\n",
+       "[10 rows x 6 columns]"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "song_data.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Show the most popular songs in the dataset"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<pre>Materializing SArray</pre>"
+      ],
+      "text/plain": [
+       "Materializing SArray"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<html>                 <body>                     <iframe style=\"border:0;margin:0\" width=\"920\" height=\"770\" srcdoc='<html lang=\"en\">                         <head>                             <script src=\"https://cdnjs.cloudflare.com/ajax/libs/vega/5.4.0/vega.js\"></script>                             <script src=\"https://cdnjs.cloudflare.com/ajax/libs/vega-embed/4.0.0/vega-embed.js\"></script>                             <script src=\"https://cdnjs.cloudflare.com/ajax/libs/vega-tooltip/0.5.1/vega-tooltip.min.js\"></script>                             <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdnjs.cloudflare.com/ajax/libs/vega-tooltip/0.5.1/vega-tooltip.min.css\">                             <style>                             .vega-actions > a{                                 color:white;                                 text-decoration: none;                                 font-family: \"Arial\";                                 cursor:pointer;                                 padding:5px;                                 background:#AAAAAA;                                 border-radius:4px;                                 padding-left:10px;                                 padding-right:10px;                                 margin-right:5px;                             }                             .vega-actions{                                 margin-top:20px;                                 text-align:center                             }                            .vega-actions > a{                                 background:#999999;                            }                             </style>                         </head>                         <body>                             <div id=\"vis\">                             </div>                             <script>                                 var vega_json = \"{\\\"$schema\\\": \\\"https://vega.github.io/schema/vega/v4.json\\\", \\\"autosize\\\": {\\\"type\\\": \\\"fit\\\", \\\"resize\\\": false, \\\"contains\\\": \\\"padding\\\"}, \\\"padding\\\": 8, \\\"metadata\\\": {\\\"bubbleOpts\\\": {\\\"showAllFields\\\": false, \\\"fields\\\": [{\\\"field\\\": \\\"count\\\"}, {\\\"field\\\": \\\"label\\\"}, {\\\"field\\\": \\\"percentage\\\"}]}}, \\\"width\\\": 720, \\\"height\\\": 550, \\\"title\\\": \\\"Distribution of Values [string]\\\", \\\"style\\\": \\\"cell\\\", \\\"data\\\": [{\\\"name\\\": \\\"pts_store_store\\\"}, {\\\"name\\\": \\\"source_2\\\", \\\"values\\\": [{\\\"label\\\": \\\"Sehr kosmisch - Harmonia\\\", \\\"label_idx\\\": 0, \\\"count\\\": 5970, \\\"percentage\\\": \\\"0.534654%\\\"}, {\\\"label\\\": \\\"Undo - Bj\\\\u00f6rk\\\", \\\"label_idx\\\": 1, \\\"count\\\": 5281, \\\"percentage\\\": \\\"0.47295%\\\"}, {\\\"label\\\": \\\"You&apos;re The One - Dwight Yoakam\\\", \\\"label_idx\\\": 2, \\\"count\\\": 4806, \\\"percentage\\\": \\\"0.43041%\\\"}, {\\\"label\\\": \\\"Dog Days Are Over (Radio Edit) - Florence + The Machine\\\", \\\"label_idx\\\": 3, \\\"count\\\": 4536, \\\"percentage\\\": \\\"0.40623%\\\"}, {\\\"label\\\": \\\"Revelry - Kings Of Leon\\\", \\\"label_idx\\\": 4, \\\"count\\\": 4339, \\\"percentage\\\": \\\"0.388587%\\\"}, {\\\"label\\\": \\\"Horn Concerto No. 4 in E flat K495: II. Romance (Andante cantabile) - Barry Tuckwell/Academy of St Martin-in-the-Fields/Sir Neville Marriner\\\", \\\"label_idx\\\": 5, \\\"count\\\": 3949, \\\"percentage\\\": \\\"0.35366%\\\"}, {\\\"label\\\": \\\"Secrets - OneRepublic\\\", \\\"label_idx\\\": 6, \\\"count\\\": 3916, \\\"percentage\\\": \\\"0.350705%\\\"}, {\\\"label\\\": \\\"Tive Sim - Cartola\\\", \\\"label_idx\\\": 7, \\\"count\\\": 3185, \\\"percentage\\\": \\\"0.285239%\\\"}, {\\\"label\\\": \\\"Fireflies - Charttraxx Karaoke\\\", \\\"label_idx\\\": 8, \\\"count\\\": 3171, \\\"percentage\\\": \\\"0.283985%\\\"}, {\\\"label\\\": \\\"Hey_ Soul Sister - Train\\\", \\\"label_idx\\\": 9, \\\"count\\\": 3132, \\\"percentage\\\": \\\"0.280492%\\\"}, {\\\"label\\\": \\\"Drop The World - Lil Wayne / Eminem\\\", \\\"label_idx\\\": 10, \\\"count\\\": 2570, \\\"percentage\\\": \\\"0.230161%\\\"}, {\\\"label\\\": \\\"OMG - Usher featuring will.i.am\\\", \\\"label_idx\\\": 11, \\\"count\\\": 2533, \\\"percentage\\\": \\\"0.226848%\\\"}, {\\\"label\\\": \\\"Other (9940 labels)\\\", \\\"label_idx\\\": 12, \\\"count\\\": 1069221, \\\"percentage\\\": \\\"95.7561%\\\"}]}, {\\\"name\\\": \\\"data_0\\\", \\\"source\\\": \\\"source_2\\\", \\\"transform\\\": [{\\\"type\\\": \\\"formula\\\", \\\"expr\\\": \\\"toNumber(datum[\\\\\\\"count\\\\\\\"])\\\", \\\"as\\\": \\\"count\\\"}, {\\\"type\\\": \\\"filter\\\", \\\"expr\\\": \\\"datum[\\\\\\\"count\\\\\\\"] !== null &amp;&amp; !isNaN(datum[\\\\\\\"count\\\\\\\"])\\\"}]}], \\\"signals\\\": [{\\\"name\\\": \\\"unit\\\", \\\"value\\\": {}, \\\"on\\\": [{\\\"events\\\": \\\"mousemove\\\", \\\"update\\\": \\\"isTuple(group()) ? group() : unit\\\"}]}, {\\\"name\\\": \\\"pts_store\\\", \\\"update\\\": \\\"data(\\\\\\\"pts_store_store\\\\\\\").length &amp;&amp; {count: data(\\\\\\\"pts_store_store\\\\\\\")[0].values[0]}\\\"}, {\\\"name\\\": \\\"pts_store_tuple\\\", \\\"value\\\": {}, \\\"on\\\": [{\\\"events\\\": [{\\\"source\\\": \\\"scope\\\", \\\"type\\\": \\\"click\\\"}], \\\"update\\\": \\\"datum &amp;&amp; item().mark.marktype !== &apos;group&apos; ? {unit: \\\\\\\"\\\\\\\", encodings: [\\\\\\\"x\\\\\\\"], fields: [\\\\\\\"count\\\\\\\"], values: [datum[\\\\\\\"count\\\\\\\"]]} : null\\\", \\\"force\\\": true}]}, {\\\"name\\\": \\\"pts_store_modify\\\", \\\"on\\\": [{\\\"events\\\": {\\\"signal\\\": \\\"pts_store_tuple\\\"}, \\\"update\\\": \\\"modify(\\\\\\\"pts_store_store\\\\\\\", pts_store_tuple, true)\\\"}]}], \\\"marks\\\": [{\\\"name\\\": \\\"marks\\\", \\\"type\\\": \\\"rect\\\", \\\"style\\\": [\\\"bar\\\"], \\\"from\\\": {\\\"data\\\": \\\"data_0\\\"}, \\\"encode\\\": {\\\"hover\\\": {\\\"fill\\\": {\\\"value\\\": \\\"#7EC2F3\\\"}}, \\\"update\\\": {\\\"x\\\": {\\\"scale\\\": \\\"x\\\", \\\"field\\\": \\\"count\\\"}, \\\"x2\\\": {\\\"scale\\\": \\\"x\\\", \\\"value\\\": 0}, \\\"y\\\": {\\\"scale\\\": \\\"y\\\", \\\"field\\\": \\\"label\\\"}, \\\"height\\\": {\\\"scale\\\": \\\"y\\\", \\\"band\\\": true}, \\\"fill\\\": {\\\"value\\\": \\\"#108EE9\\\"}}}}], \\\"scales\\\": [{\\\"name\\\": \\\"x\\\", \\\"type\\\": \\\"linear\\\", \\\"domain\\\": {\\\"data\\\": \\\"data_0\\\", \\\"field\\\": \\\"count\\\"}, \\\"range\\\": [0, {\\\"signal\\\": \\\"width\\\"}], \\\"nice\\\": true, \\\"zero\\\": true}, {\\\"name\\\": \\\"y\\\", \\\"type\\\": \\\"band\\\", \\\"domain\\\": {\\\"data\\\": \\\"data_0\\\", \\\"field\\\": \\\"label\\\", \\\"sort\\\": {\\\"op\\\": \\\"mean\\\", \\\"field\\\": \\\"label_idx\\\", \\\"order\\\": \\\"descending\\\"}}, \\\"range\\\": [{\\\"signal\\\": \\\"height\\\"}, 0], \\\"paddingInner\\\": 0.1, \\\"paddingOuter\\\": 0.05}], \\\"axes\\\": [{\\\"orient\\\": \\\"top\\\", \\\"scale\\\": \\\"x\\\", \\\"labelOverlap\\\": true, \\\"tickCount\\\": {\\\"signal\\\": \\\"ceil(width/40)\\\"}, \\\"title\\\": \\\"Count\\\", \\\"zindex\\\": 1}, {\\\"orient\\\": \\\"top\\\", \\\"scale\\\": \\\"x\\\", \\\"domain\\\": false, \\\"grid\\\": true, \\\"labels\\\": false, \\\"maxExtent\\\": 0, \\\"minExtent\\\": 0, \\\"tickCount\\\": {\\\"signal\\\": \\\"ceil(width/40)\\\"}, \\\"ticks\\\": false, \\\"zindex\\\": 0, \\\"gridScale\\\": \\\"y\\\"}, {\\\"scale\\\": \\\"y\\\", \\\"labelOverlap\\\": true, \\\"orient\\\": \\\"left\\\", \\\"title\\\": \\\"Values\\\", \\\"zindex\\\": 1}], \\\"config\\\": {\\\"axis\\\": {\\\"gridColor\\\": \\\"rgba(204,204,204,1.0)\\\", \\\"labelFont\\\": \\\"\\\\\\\"San Francisco\\\\\\\", HelveticaNeue, Arial\\\", \\\"labelFontSize\\\": 12, \\\"labelPadding\\\": 10, \\\"labelColor\\\": \\\"rgba(0,0,0,0.847)\\\", \\\"tickColor\\\": \\\"rgb(136,136,136)\\\", \\\"titleFont\\\": \\\"\\\\\\\"San Francisco\\\\\\\", HelveticaNeue, Arial\\\", \\\"titleFontWeight\\\": \\\"normal\\\", \\\"titlePadding\\\": 20, \\\"titleFontSize\\\": 14, \\\"titleColor\\\": \\\"rgba(0,0,0,0.847)\\\"}, \\\"axisY\\\": {\\\"minExtent\\\": 30}, \\\"legend\\\": {\\\"labelFont\\\": \\\"\\\\\\\"San Francisco\\\\\\\", HelveticaNeue, Arial\\\", \\\"labelColor\\\": \\\"rgba(0,0,0,0.847)\\\", \\\"titleFont\\\": \\\"\\\\\\\"San Francisco\\\\\\\", HelveticaNeue, Arial\\\", \\\"cornerRadius\\\": 30, \\\"gradientLength\\\": 608, \\\"titleColor\\\": \\\"rgba(0,0,0,0.847)\\\"}, \\\"range\\\": {\\\"heatmap\\\": {\\\"scheme\\\": \\\"greenblue\\\"}}, \\\"style\\\": {\\\"rect\\\": {\\\"stroke\\\": \\\"rgba(200, 200, 200, 0.5)\\\"}, \\\"cell\\\": {\\\"stroke\\\": \\\"transparent\\\"}, \\\"group-title\\\": {\\\"fontSize\\\": 29, \\\"font\\\": \\\"HelveticaNeue, Arial\\\", \\\"fontWeight\\\": \\\"normal\\\", \\\"fill\\\": \\\"rgba(0,0,0,0.65)\\\"}}, \\\"title\\\": {\\\"color\\\": \\\"rgba(0,0,0,0.847)\\\", \\\"font\\\": \\\"\\\\\\\"San Francisco\\\\\\\", HelveticaNeue, Arial\\\", \\\"fontSize\\\": 18, \\\"fontWeight\\\": \\\"normal\\\", \\\"offset\\\": 30}}}\";                                 var vega_json_parsed = JSON.parse(vega_json);                                 var toolTipOpts = {                                     showAllFields: true                                 };                                 if(vega_json_parsed[\"metadata\"] != null){                                     if(vega_json_parsed[\"metadata\"][\"bubbleOpts\"] != null){                                         toolTipOpts = vega_json_parsed[\"metadata\"][\"bubbleOpts\"];                                     };                                 };                                 vegaEmbed(\"#vis\", vega_json_parsed).then(function (result) {                                     vegaTooltip.vega(result.view, toolTipOpts);                                  });                             </script>                         </body>                     </html>' src=\"demo_iframe_srcdoc.htm\">                         <p>Your browser does not support iframes.</p>                     </iframe>                 </body>             </html>"
+      ],
+      "text/plain": [
+       "<IPython.core.display.HTML object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "song_data['song'].show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Count the number of unique users in the data\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1116609"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(song_data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "users = song_data['user_id'].unique()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "66346"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(users)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Create a song recommender"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "train_data, test_data = song_data.random_split(.8,seed=0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Simple popularity recommender"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<pre>Warning: Ignoring columns song_id, listen_count, title, artist;</pre>"
+      ],
+      "text/plain": [
+       "Warning: Ignoring columns song_id, listen_count, title, artist;"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre> To use one of these as a rating column, specify the column name to be used as target</pre>"
+      ],
+      "text/plain": [
+       " To use one of these as a rating column, specify the column name to be used as target"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>    and use a method that allows the use of a target.</pre>"
+      ],
+      "text/plain": [
+       "    and use a method that allows the use of a target."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Preparing data set.</pre>"
+      ],
+      "text/plain": [
+       "Preparing data set."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>    Data has 893580 observations with 66085 users and 9952 items.</pre>"
+      ],
+      "text/plain": [
+       "    Data has 893580 observations with 66085 users and 9952 items."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>    Data prepared in: 1.83807s</pre>"
+      ],
+      "text/plain": [
+       "    Data prepared in: 1.83807s"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>893580 observations to process; with 9952 unique items.</pre>"
+      ],
+      "text/plain": [
+       "893580 observations to process; with 9952 unique items."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "popularity_model = tc.popularity_recommender.create(train_data,\n",
+    "                                                   user_id='user_id',\n",
+    "                                                   item_id='song')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Use the popularity model to make predictions"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div style=\"max-height:1000px;max-width:1500px;overflow:auto;\"><table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">user_id</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">song</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">score</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">rank</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Sehr kosmisch - Harmonia</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4754.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Undo - Björk</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4227.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">You&#x27;re The One - Dwight<br>Yoakam ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3781.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Dog Days Are Over (Radio<br>Edit) - Florence + The ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3633.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Revelry - Kings Of Leon</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3527.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Horn Concerto No. 4 in E<br>flat K495: II. Romance ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3161.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">6</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Secrets - OneRepublic</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3148.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">7</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Hey_ Soul Sister - Train</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2538.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Fireflies - Charttraxx<br>Karaoke ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2532.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Tive Sim - Cartola</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2521.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">10</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "[10 rows x 4 columns]<br/>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Columns:\n",
+       "\tuser_id\tstr\n",
+       "\tsong\tstr\n",
+       "\tscore\tfloat\n",
+       "\trank\tint\n",
+       "\n",
+       "Rows: 10\n",
+       "\n",
+       "Data:\n",
+       "+---------+--------------------------------+--------+------+\n",
+       "| user_id |              song              | score  | rank |\n",
+       "+---------+--------------------------------+--------+------+\n",
+       "|    0    |    Sehr kosmisch - Harmonia    | 4754.0 |  1   |\n",
+       "|    0    |          Undo - Björk          | 4227.0 |  2   |\n",
+       "|    0    | You're The One - Dwight Yoakam | 3781.0 |  3   |\n",
+       "|    0    | Dog Days Are Over (Radio E...  | 3633.0 |  4   |\n",
+       "|    0    |    Revelry - Kings Of Leon     | 3527.0 |  5   |\n",
+       "|    0    | Horn Concerto No. 4 in E f...  | 3161.0 |  6   |\n",
+       "|    0    |     Secrets - OneRepublic      | 3148.0 |  7   |\n",
+       "|    0    |    Hey_ Soul Sister - Train    | 2538.0 |  8   |\n",
+       "|    0    | Fireflies - Charttraxx Karaoke | 2532.0 |  9   |\n",
+       "|    0    |       Tive Sim - Cartola       | 2521.0 |  10  |\n",
+       "+---------+--------------------------------+--------+------+\n",
+       "[10 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "popularity_model.recommend(users=[0])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div style=\"max-height:1000px;max-width:1500px;overflow:auto;\"><table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">user_id</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">song</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">score</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">rank</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Sehr kosmisch - Harmonia</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4754.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Undo - Björk</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4227.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">You&#x27;re The One - Dwight<br>Yoakam ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3781.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Dog Days Are Over (Radio<br>Edit) - Florence + The ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3633.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Revelry - Kings Of Leon</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3527.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Horn Concerto No. 4 in E<br>flat K495: II. Romance ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3161.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">6</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Secrets - OneRepublic</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3148.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">7</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Hey_ Soul Sister - Train</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2538.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Fireflies - Charttraxx<br>Karaoke ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2532.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Tive Sim - Cartola</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2521.0</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">10</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "[10 rows x 4 columns]<br/>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Columns:\n",
+       "\tuser_id\tstr\n",
+       "\tsong\tstr\n",
+       "\tscore\tfloat\n",
+       "\trank\tint\n",
+       "\n",
+       "Rows: 10\n",
+       "\n",
+       "Data:\n",
+       "+---------+--------------------------------+--------+------+\n",
+       "| user_id |              song              | score  | rank |\n",
+       "+---------+--------------------------------+--------+------+\n",
+       "|    1    |    Sehr kosmisch - Harmonia    | 4754.0 |  1   |\n",
+       "|    1    |          Undo - Björk          | 4227.0 |  2   |\n",
+       "|    1    | You're The One - Dwight Yoakam | 3781.0 |  3   |\n",
+       "|    1    | Dog Days Are Over (Radio E...  | 3633.0 |  4   |\n",
+       "|    1    |    Revelry - Kings Of Leon     | 3527.0 |  5   |\n",
+       "|    1    | Horn Concerto No. 4 in E f...  | 3161.0 |  6   |\n",
+       "|    1    |     Secrets - OneRepublic      | 3148.0 |  7   |\n",
+       "|    1    |    Hey_ Soul Sister - Train    | 2538.0 |  8   |\n",
+       "|    1    | Fireflies - Charttraxx Karaoke | 2532.0 |  9   |\n",
+       "|    1    |       Tive Sim - Cartola       | 2521.0 |  10  |\n",
+       "+---------+--------------------------------+--------+------+\n",
+       "[10 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "popularity_model.recommend(users=[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Song recommender with personalization"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<pre>Warning: Ignoring columns song_id, listen_count, title, artist;</pre>"
+      ],
+      "text/plain": [
+       "Warning: Ignoring columns song_id, listen_count, title, artist;"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre> To use one of these as a rating column, specify the column name to be used as target</pre>"
+      ],
+      "text/plain": [
+       " To use one of these as a rating column, specify the column name to be used as target"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>    and use a method that allows the use of a target.</pre>"
+      ],
+      "text/plain": [
+       "    and use a method that allows the use of a target."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Preparing data set.</pre>"
+      ],
+      "text/plain": [
+       "Preparing data set."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>    Data has 893580 observations with 66085 users and 9952 items.</pre>"
+      ],
+      "text/plain": [
+       "    Data has 893580 observations with 66085 users and 9952 items."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>    Data prepared in: 2.60515s</pre>"
+      ],
+      "text/plain": [
+       "    Data prepared in: 2.60515s"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Training model from provided data.</pre>"
+      ],
+      "text/plain": [
+       "Training model from provided data."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Gathering per-item and per-user statistics.</pre>"
+      ],
+      "text/plain": [
+       "Gathering per-item and per-user statistics."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>+--------------------------------+------------+</pre>"
+      ],
+      "text/plain": [
+       "+--------------------------------+------------+"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>| Elapsed Time (Item Statistics) | % Complete |</pre>"
+      ],
+      "text/plain": [
+       "| Elapsed Time (Item Statistics) | % Complete |"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>+--------------------------------+------------+</pre>"
+      ],
+      "text/plain": [
+       "+--------------------------------+------------+"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>| 4.37ms                         | 4.5        |</pre>"
+      ],
+      "text/plain": [
+       "| 4.37ms                         | 4.5        |"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>| 65.689ms                       | 100        |</pre>"
+      ],
+      "text/plain": [
+       "| 65.689ms                       | 100        |"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>+--------------------------------+------------+</pre>"
+      ],
+      "text/plain": [
+       "+--------------------------------+------------+"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Setting up lookup tables.</pre>"
+      ],
+      "text/plain": [
+       "Setting up lookup tables."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Processing data in one pass using dense lookup tables.</pre>"
+      ],
+      "text/plain": [
+       "Processing data in one pass using dense lookup tables."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>+-------------------------------------+------------------+-----------------+</pre>"
+      ],
+      "text/plain": [
+       "+-------------------------------------+------------------+-----------------+"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>| Elapsed Time (Constructing Lookups) | Total % Complete | Items Processed |</pre>"
+      ],
+      "text/plain": [
+       "| Elapsed Time (Constructing Lookups) | Total % Complete | Items Processed |"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>+-------------------------------------+------------------+-----------------+</pre>"
+      ],
+      "text/plain": [
+       "+-------------------------------------+------------------+-----------------+"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>| 815.695ms                           | 0                | 0               |</pre>"
+      ],
+      "text/plain": [
+       "| 815.695ms                           | 0                | 0               |"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>| 2.82s                               | 100              | 9952            |</pre>"
+      ],
+      "text/plain": [
+       "| 2.82s                               | 100              | 9952            |"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>+-------------------------------------+------------------+-----------------+</pre>"
+      ],
+      "text/plain": [
+       "+-------------------------------------+------------------+-----------------+"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Finalizing lookup tables.</pre>"
+      ],
+      "text/plain": [
+       "Finalizing lookup tables."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Generating candidate set for working with new users.</pre>"
+      ],
+      "text/plain": [
+       "Generating candidate set for working with new users."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>Finished training in 3.97232s</pre>"
+      ],
+      "text/plain": [
+       "Finished training in 3.97232s"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "personalized_model = tc.item_similarity_recommender.create(train_data,\n",
+    "                                                          user_id='user_id',\n",
+    "                                                          item_id='song')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Applying personalized model to make recommendations"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div style=\"max-height:1000px;max-width:1500px;overflow:auto;\"><table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">user_id</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">song</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">score</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">rank</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Cuando Pase El Temblor -<br>Soda Stereo ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.019450453611520622</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Fireflies - Charttraxx<br>Karaoke ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.014473731701190654</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Love Is A Losing Game -<br>Amy Winehouse ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.014286596041459303</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Marry Me - Train</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.014133471709031325</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Secrets - OneRepublic</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.013591665488023024</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Sehr kosmisch - Harmonia</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.013398789442502536</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">6</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Te Hacen Falta Vitaminas<br>- Soda Stereo ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.01293028317964994</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">7</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">OMG - Usher featuring<br>will.i.am ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.012777828253232516</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Y solo se me ocurre<br>amarte (Unplugged) - ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.012341127945826603</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">c66c10a9567f0d82ff31441a9<br>fd5063e5cd9dfe8 ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">No Dejes Que... -<br>Caifanes ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.012104249917543851</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">10</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "[10 rows x 4 columns]<br/>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Columns:\n",
+       "\tuser_id\tstr\n",
+       "\tsong\tstr\n",
+       "\tscore\tfloat\n",
+       "\trank\tint\n",
+       "\n",
+       "Rows: 10\n",
+       "\n",
+       "Data:\n",
+       "+-------------------------------+--------------------------------+\n",
+       "|            user_id            |              song              |\n",
+       "+-------------------------------+--------------------------------+\n",
+       "| c66c10a9567f0d82ff31441a9f... | Cuando Pase El Temblor - S...  |\n",
+       "| c66c10a9567f0d82ff31441a9f... | Fireflies - Charttraxx Karaoke |\n",
+       "| c66c10a9567f0d82ff31441a9f... | Love Is A Losing Game - Am...  |\n",
+       "| c66c10a9567f0d82ff31441a9f... |        Marry Me - Train        |\n",
+       "| c66c10a9567f0d82ff31441a9f... |     Secrets - OneRepublic      |\n",
+       "| c66c10a9567f0d82ff31441a9f... |    Sehr kosmisch - Harmonia    |\n",
+       "| c66c10a9567f0d82ff31441a9f... | Te Hacen Falta Vitaminas -...  |\n",
+       "| c66c10a9567f0d82ff31441a9f... | OMG - Usher featuring will...  |\n",
+       "| c66c10a9567f0d82ff31441a9f... | Y solo se me ocurre amarte...  |\n",
+       "| c66c10a9567f0d82ff31441a9f... |   No Dejes Que... - Caifanes   |\n",
+       "+-------------------------------+--------------------------------+\n",
+       "+----------------------+------+\n",
+       "|        score         | rank |\n",
+       "+----------------------+------+\n",
+       "| 0.019450453611520622 |  1   |\n",
+       "| 0.014473731701190654 |  2   |\n",
+       "| 0.014286596041459303 |  3   |\n",
+       "| 0.014133471709031325 |  4   |\n",
+       "| 0.013591665488023024 |  5   |\n",
+       "| 0.013398789442502536 |  6   |\n",
+       "| 0.01293028317964994  |  7   |\n",
+       "| 0.012777828253232516 |  8   |\n",
+       "| 0.012341127945826603 |  9   |\n",
+       "| 0.012104249917543851 |  10  |\n",
+       "+----------------------+------+\n",
+       "[10 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "personalized_model.recommend(users=[users[0]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div style=\"max-height:1000px;max-width:1500px;overflow:auto;\"><table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">user_id</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">song</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">score</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">rank</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Riot In Cell Block Number<br>Nine - Dr Feelgood ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.03749999403953552</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Sei Lá Mangueira -<br>Elizeth Cardoso ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.03316326439380646</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">The Stallion - Ween</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.032258063554763794</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Rain - Subhumans</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.031415924429893494</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">West One (Shine On Me) -<br>The Ruts ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.030677199363708496</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Back Against The Wall -<br>Cage The Elephant ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.030120477080345154</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">6</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Life Less Frightening -<br>Rise Against ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.0284431129693985</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">7</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">A Beggar On A Beach Of<br>Gold - Mike And The ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.023002490401268005</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Audience Of One - Rise<br>Against ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.01939384639263153</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">279292bb36dbfc7f505e36ebf<br>038c81eb1d1d63e ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Blame It On The Boogie -<br>The Jacksons ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.018987342715263367</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">10</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "[10 rows x 4 columns]<br/>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Columns:\n",
+       "\tuser_id\tstr\n",
+       "\tsong\tstr\n",
+       "\tscore\tfloat\n",
+       "\trank\tint\n",
+       "\n",
+       "Rows: 10\n",
+       "\n",
+       "Data:\n",
+       "+-------------------------------+--------------------------------+\n",
+       "|            user_id            |              song              |\n",
+       "+-------------------------------+--------------------------------+\n",
+       "| 279292bb36dbfc7f505e36ebf0... | Riot In Cell Block Number ...  |\n",
+       "| 279292bb36dbfc7f505e36ebf0... | Sei Lá Mangueira - Elizeth...  |\n",
+       "| 279292bb36dbfc7f505e36ebf0... |      The Stallion - Ween       |\n",
+       "| 279292bb36dbfc7f505e36ebf0... |        Rain - Subhumans        |\n",
+       "| 279292bb36dbfc7f505e36ebf0... | West One (Shine On Me) - T...  |\n",
+       "| 279292bb36dbfc7f505e36ebf0... | Back Against The Wall - Ca...  |\n",
+       "| 279292bb36dbfc7f505e36ebf0... | Life Less Frightening - Ri...  |\n",
+       "| 279292bb36dbfc7f505e36ebf0... | A Beggar On A Beach Of Gol...  |\n",
+       "| 279292bb36dbfc7f505e36ebf0... | Audience Of One - Rise Against |\n",
+       "| 279292bb36dbfc7f505e36ebf0... | Blame It On The Boogie - T...  |\n",
+       "+-------------------------------+--------------------------------+\n",
+       "+----------------------+------+\n",
+       "|        score         | rank |\n",
+       "+----------------------+------+\n",
+       "| 0.03749999403953552  |  1   |\n",
+       "| 0.03316326439380646  |  2   |\n",
+       "| 0.032258063554763794 |  3   |\n",
+       "| 0.031415924429893494 |  4   |\n",
+       "| 0.030677199363708496 |  5   |\n",
+       "| 0.030120477080345154 |  6   |\n",
+       "|  0.0284431129693985  |  7   |\n",
+       "| 0.023002490401268005 |  8   |\n",
+       "| 0.01939384639263153  |  9   |\n",
+       "| 0.018987342715263367 |  10  |\n",
+       "+----------------------+------+\n",
+       "[10 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "personalized_model.recommend(users=[users[1]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div style=\"max-height:1000px;max-width:1500px;overflow:auto;\"><table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">song</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">similar</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">score</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">rank</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Murmullo - Buena Vista<br>Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.1881188154220581</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">La Bayamesa - Buena Vista<br>Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.1871921420097351</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Amor de Loca Juventud -<br>Buena Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.18483412265777588</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Diferente - Gotan Project</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.021459221839904785</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Mistica - Orishas</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.020576119422912598</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Hotel California - Gipsy<br>Kings ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.019304990768432617</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">6</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Nací Orishas - Orishas</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.019157111644744873</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">7</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Le Moulin - Yann Tiersen</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.018796980381011963</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Gitana - Willie Colon</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.018796980381011963</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Chan Chan (Live) - Buena<br>Vista Social Club ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Criminal - Gotan Project</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">0.018779337406158447</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">10</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "[10 rows x 4 columns]<br/>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Columns:\n",
+       "\tsong\tstr\n",
+       "\tsimilar\tstr\n",
+       "\tscore\tfloat\n",
+       "\trank\tint\n",
+       "\n",
+       "Rows: 10\n",
+       "\n",
+       "Data:\n",
+       "+-------------------------------+--------------------------------+\n",
+       "|              song             |            similar             |\n",
+       "+-------------------------------+--------------------------------+\n",
+       "| Chan Chan (Live) - Buena V... | Murmullo - Buena Vista Soc...  |\n",
+       "| Chan Chan (Live) - Buena V... | La Bayamesa - Buena Vista ...  |\n",
+       "| Chan Chan (Live) - Buena V... | Amor de Loca Juventud - Bu...  |\n",
+       "| Chan Chan (Live) - Buena V... |   Diferente - Gotan Project    |\n",
+       "| Chan Chan (Live) - Buena V... |       Mistica - Orishas        |\n",
+       "| Chan Chan (Live) - Buena V... | Hotel California - Gipsy Kings |\n",
+       "| Chan Chan (Live) - Buena V... |     Nací Orishas - Orishas     |\n",
+       "| Chan Chan (Live) - Buena V... |    Le Moulin - Yann Tiersen    |\n",
+       "| Chan Chan (Live) - Buena V... |     Gitana - Willie Colon      |\n",
+       "| Chan Chan (Live) - Buena V... |    Criminal - Gotan Project    |\n",
+       "+-------------------------------+--------------------------------+\n",
+       "+----------------------+------+\n",
+       "|        score         | rank |\n",
+       "+----------------------+------+\n",
+       "|  0.1881188154220581  |  1   |\n",
+       "|  0.1871921420097351  |  2   |\n",
+       "| 0.18483412265777588  |  3   |\n",
+       "| 0.021459221839904785 |  4   |\n",
+       "| 0.020576119422912598 |  5   |\n",
+       "| 0.019304990768432617 |  6   |\n",
+       "| 0.019157111644744873 |  7   |\n",
+       "| 0.018796980381011963 |  8   |\n",
+       "| 0.018796980381011963 |  9   |\n",
+       "| 0.018779337406158447 |  10  |\n",
+       "+----------------------+------+\n",
+       "[10 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "personalized_model.get_similar_items(['Chan Chan (Live) - Buena Vista Social Club'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Quantitatve comparison between the models"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "##### \"When comparing recommenders, a good metric to use is precision recall.\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "compare_models: using 2931 users to estimate model performance\n",
+      "PROGRESS: Evaluate model M0\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>recommendations finished on 1000/2931 queries. users per second: 7874.57</pre>"
+      ],
+      "text/plain": [
+       "recommendations finished on 1000/2931 queries. users per second: 7874.57"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>recommendations finished on 2000/2931 queries. users per second: 8617.42</pre>"
+      ],
+      "text/plain": [
+       "recommendations finished on 2000/2931 queries. users per second: 8617.42"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "WARNING:root:Model trained without a target. Skipping RMSE computation.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "Precision and recall summary statistics by cutoff\n",
+      "+--------+----------------------+----------------------+\n",
+      "| cutoff |    mean_precision    |     mean_recall      |\n",
+      "+--------+----------------------+----------------------+\n",
+      "|   1    | 0.02695325827362674  | 0.007135491832041892 |\n",
+      "|   2    | 0.025076765609007155 | 0.013264259194176715 |\n",
+      "|   3    | 0.023541453428863875 | 0.018929200606303417 |\n",
+      "|   4    | 0.021835551006482434 | 0.022930932601894168 |\n",
+      "|   5    | 0.02033435687478679  | 0.02682242096114095  |\n",
+      "|   6    | 0.01927669737291029  | 0.029598180210799907 |\n",
+      "|   7    | 0.018521226300141375 | 0.03322667636593824  |\n",
+      "|   8    | 0.01735755714773115  | 0.035409279009134514 |\n",
+      "|   9    | 0.01614920959854433  | 0.03791018611597821  |\n",
+      "|   10   | 0.015626066189014055 | 0.04112269823330101  |\n",
+      "+--------+----------------------+----------------------+\n",
+      "[10 rows x 3 columns]\n",
+      "\n",
+      "PROGRESS: Evaluate model M1\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>recommendations finished on 1000/2931 queries. users per second: 6589.96</pre>"
+      ],
+      "text/plain": [
+       "recommendations finished on 1000/2931 queries. users per second: 6589.96"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/html": [
+       "<pre>recommendations finished on 2000/2931 queries. users per second: 7671.15</pre>"
+      ],
+      "text/plain": [
+       "recommendations finished on 2000/2931 queries. users per second: 7671.15"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "WARNING:root:Model trained without a target. Skipping RMSE computation.\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "Precision and recall summary statistics by cutoff\n",
+      "+--------+----------------------+----------------------+\n",
+      "| cutoff |    mean_precision    |     mean_recall      |\n",
+      "+--------+----------------------+----------------------+\n",
+      "|   1    | 0.05458887751620607  | 0.015407218733728472 |\n",
+      "|   2    | 0.044012282497441095 | 0.02299237496269229  |\n",
+      "|   3    | 0.037643580120550434 | 0.029189657720875745 |\n",
+      "|   4    | 0.03317980211531898  | 0.033941535169784924 |\n",
+      "|   5    | 0.031047424087342217 | 0.03950657174812757  |\n",
+      "|   6    | 0.028829750938246353 | 0.04426684332006748  |\n",
+      "|   7    | 0.02646585758151777  | 0.04748464791965303  |\n",
+      "|   8    | 0.024564994882292728 | 0.04945970762245073  |\n",
+      "|   9    | 0.023313999772546397 | 0.052688072570365285 |\n",
+      "|   10   | 0.022006141248720607 | 0.05571874863072407  |\n",
+      "+--------+----------------------+----------------------+\n",
+      "[10 rows x 3 columns]\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "model_performance = tc.recommender.util.compare_models(test_data, [popularity_model, personalized_model], user_sample=.05)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 1. Counting unique users "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Kanye West: 2522"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "kanye = song_data[song_data['artist']=='Kanye West']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "dtype: str\n",
+       "Rows: 2522\n",
+       "['18325842a941bc58449ee71d659a08d1c1bd2383', '82c458f2e9bc30f87890b408e5b965114989edf4', '37b97745b5649ca367aab9e4999528b470ecc692', 'd6dbb0578fe5baf513cad07fbf07801f89fd9313', '99d724639a1e51f53770236f24c87e2ca9126ec6', '58fcc1ee8eb4bff5a9bedff6e7510f0167367c1a', '87fa091833add3a9b90404d4bae5d2cd709f632b', 'f34ffb77d1ca071bfa40fcf51fa5b716cd8f4219', 'eb7f101c8b52a56d0e73100f5dbbd609df79c620', '9116c65d75343f5ac19f27b2eb8b1b447855e2ba', 'ed328acd96a4147df93f64586eb56103ffa26c5e', '5d5e0142e54c3bb7b69f548c2ee55066c90700eb', 'f1a5555ab79f8a31c8d79112f7be7a84349bf92f', 'ff9de5c42ae7797c4cdcfb04370e77c51c80beef', 'c1329a0da27e6ee4b09e570a71312111d4f0189c', 'ba21d60c0ee0a8fe17c37477f9428b19f69a6ee7', '12789b3b67efc997897d019fff50e226357ebbfd', '536b99fac3204bc6667991d6efc1b8e9cbf4680e', 'e3f8995093f0eef5b2d42524ae7a0be636267501', '8e560b427cb35f48ff51b5cc8b9f83672af25b1e', '705449d46b99784af9bca24a0fa4abf91695e47e', '3a2e72debb878bdc9abc0938ae4dc5789c20a3b2', '32b05b10e8a25ebccb561adaa7033d3eefa8900e', '932ad377a3bb70d0d32969f4941f0268d560afc9', '871d004a886a45317e425b5516ba3391b50e2443', '417862529ebc6866ea0baa9f4a066d7cbfbb4adb', 'd81a9f0631a5ffd890bbd8a742c83cef12b7ba27', 'aabb69c1fcb4beab8a9a3eb4a407bbb93d098b49', 'af54ada7e2c059f03b6e2f99dd9da8c15cd68123', '377e0b1fcb564d6977d08ccd4ff633f5824dc173', '3278a488b02a60670988f07dba15cf3d224b2993', '7614d6c4a49db552776a7a4015111736098c8c36', '544a657785b1653359163efff5f7cafafc759d2d', '58ea7b11bae17385192c890b35904fd7102acd7e', 'ce8f4d7d26ab3014750755a27515672dd3ac0f9c', '3f98392c44c273e5ddef3d9bec72df795fed51b3', '941b18675e7aba6506e6e64ac425e6c5855698d7', 'b1fac841c888bd4ef39620b3a9076dbf624e7550', '74ae0da81235754a41d6a92abefb34d87c97be46', 'a827eb4304ba7152997238c855bfc4a243742f1e', 'f1387538c64087425caa480fc7c233a9eaf91b6e', '712964436b2ca389664e4d8c567b1ad44bef5da0', '7b544bb0c02878033e4e4eea4df0a10466a71405', '1f757cc1c6b92273b71702368c863f9d565374ca', '55150b8f1bd294d75a6d4fc44c6fd746bc5a9a57', 'c904f63a6854db1f2d335eaa334bd13bc7ef9a4a', '2255e32bef5dbb7a76a423e6f1977161f54df3e7', '444ed11197a6eb2ad90ff8567ee0d1ebb0fd313a', '5dbeb9b404c72a477866202c82a23b989010a61c', '0bd0b85b51f7e3bd445d9a6323efea4eef3b0b4a', 'dac1420820d8c385100a1239180b0a72cf621359', 'd5fe830b22b8b2a932d54e4d963d1ab22a2bf2e1', '4035545ca4f5bb05e696efb5c593af7dba378de4', 'daf3dc405f96fcb6dd38c8d5ff7a655b79d88522', '2c7e4e1d5e580b8401e0fe68ce271e8274b8b377', 'dcbc775b07eb36aceb346e8072dac7354ca68333', 'ac70e33cd4bd1956efdd0ad01160e167a35496dc', '0c002d395fd5a1d136507dd0d3d876fb48b72461', 'f7ad3be97e617ecf33f7c1547ca2634e217cd152', 'ca4bbea93819e5f73acd37aafbfcd64f2c5b11a7', '25c85accee5b305d4738948c1c75d132e664f8a4', 'eb376cd5eb7c97625afd03f04ba3934d32498192', 'd248654cf48a863c80e837f731a72575dfb652fd', 'f04d907def4a49c2afae9e0bc47332ad7203ad52', '988ecea45f23f55364729902fd62ba1b236e92e6', '6eb142656f688bedd9ad8f55d2c8dc663d045972', '1b57d4c3e456f532d809e91337ad8868bce54b25', '255e26f11a3dbbb674bcebf4552c92ecf1c3160c', 'e9902857d9dde3ec866cc971efcb6d254a8a583e', '80c1067334c8cb0bb17b93ed48393af3a011003b', 'cedfb30d7e8eab7018382d792eeefa588df16f6f', '3bb976fc01de0f7a0af5cf3c3cecf99a02671dd6', '72dbd9d90a144a6a57481f36e818d680f4f0f353', '2ced571d35465863720b32e5d9d986a4cd8f9d49', 'a65c6b7d5d32aa485dd891532a758bb07f73ae89', 'ac7abbf813a388764f6c18521bc73b4a36543d86', '0325c6f37767763065c82987e556e5ff61184149', '06529e2d4c86b50d4425d844220541ec99aa562e', 'c03d329b0f3c9392c22d8bea39974b57367918f6', '8f2dc7d2e533e1807ac73761b7c2bcfcaaf0d64a', '593863fbd75a32d68126747119506020dd37c6f0', 'ec15b14796ee8fe559edb301c4101b3e3f883308', '601a01bd8f7ee5a8a1dd0a968ca6b74e07803155', '0ccd1f56819099a87550068312adac9223527593', '24c6d19239142a08a6ce11f8b82181f2ecd274cc', '1aa972c6607701f5a35b4170bf1d7625f2be80d8', '487d94cc146740953a593a20422b89ad78d875f2', '80f9d9a9ad57b96790b9f4c00e6a0b77050cb5f9', 'e6a624cbf8f3fa151d7a4f94aa8d6630291131d7', 'e2ee9eec3e8cbee96ca75a8c25eb3eb515e4f783', 'd6aa611e95c46789e5ed2139410ce15f5c9c9ed3', '27977f74192e5f3ae6d29f0b039ce0301cfcc89f', '044c0d9b2e0624eb5b6b13580566530795d24dc2', 'c6befad7ff2efcda97b459090c50b1a15732ea94', '42a193193c6d82971eea9ffa8d477e61ec6838e8', 'ca850d36932421b9be0d7cf79ce7d8e9965e778f', '936d61cb7c11e51c6e009096e6ec5706f79eb0e3', 'a4c2921a7db288b12cb2c32becbcec5b499c294f', 'eed8f0b29dbca9be740ee29d596fedfaa093965d', '5ecaa3071d3cb623a596cae6532d9d88201e5b51', ... ]"
+      ]
+     },
+     "execution_count": 31,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "kanye['user_id'].unique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Foo Fighters: 2055"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "foo = song_data[song_data['artist']=='Foo Fighters']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "dtype: str\n",
+       "Rows: 2055\n",
+       "['83b1428917b47a6b130ed471b09033820be78a8c', '4a3a1ae2748f12f7ab921a47d6d79abf82e3e325', '66515166dc465cb51af511db9f6e708095af31a6', '632af0475de5f2d90838520df96e4b681a383114', 'd95df4df9d6f25e76f13556ce6cf5b50f979c76c', 'b919f662b26957782fa1ea3543438edf53489ec7', 'c8529f95b292bad3a1d6ecaaa36f1d102b24598f', 'f9d2599a999d601ad598fe0cb79b41329ba3d42c', '822d61e5fe7d8b7b120e1fad28fce06a48db2255', '8ab12a0531093fb7180cbc53cf6466fc913370e9', '19e4bf53bf61f2348a2715ea99d3d0c416a51bf0', '06010bea94826f4b317ed734ef0e320364b7be39', 'e4f9cfac3c236a5f3680dba4beb094b2c277b6ac', 'd6eb3834db466dad7885fcb7068ba3e2da7ebb60', '8e560b427cb35f48ff51b5cc8b9f83672af25b1e', '81f5e4f9d86d4df88750dbf81bc17addc6ef3c4e', 'd7cff075521649636b455da7cb259d2aee8416dc', '763db23a8347f8103a8c99905b34fe24f85704ca', 'bd51142252349f35b2f2b0545065249936552a2a', '97c86e154dd5f98f6250c2de18e6f431b3a00def', '932ad377a3bb70d0d32969f4941f0268d560afc9', '5e161b9e14f303a0cef2d3f44d07dd946549f89f', '46e4998584dc59acb5be224f3c9c481ec6c6283e', 'bc908051af3f5aa5ee07b341e10edced8b8d4d09', '32c46af3c6934225f4b4bc29c5ed1fd4acdfbc6e', 'aee02d259133c391eb2e5599bd4259d99a0a58b9', '71f7020c5ab450ea0be0e2ad28199e61e0428d39', '34bbead69cfec2d51532dc616eeee89fd7576716', '4609285cd01f3a507db9b340ed63070aa31f21df', '9253b3af09092f742e6d1ef5a45a612c6f14c0a0', 'b71d6d233f2250a3e21f7fd81a2602731c9fdc5b', '3cf1ee1f976f7a6e2908387c1b2ba48b1227c439', '0a50c4dcfdf8bc0a6b1bb01339a4f481385139a9', '8f0c473b896ea6196c257606b2dc9644d364c5ae', 'b3624da347cbe301bcd336b94e748a4932a1daac', '5463c60f0505ea07f9c758dd01aa7d81e8caccf1', 'cd606e09822bbb00a867db3739bc7e00bc0ca3fc', '1b221e23417c3050ccc92ccd6774667914d38045', '463c7fd6b4dc1a2f6d36500eb938d7dfc31bce74', 'e3b8a5929869a2eb955081a135ab278ecc381710', '2bde993131f6e845a00ccee7320cd2d6083038c5', 'ada0849784fd6147fb44063497f84bd6cd4e8822', '2c2f76a790be58c0999b2db20511b4b5ea5e352c', '2ee52951a9f104bf6f459eb35495b3886c7157d3', '3ec67de4956fdf0e9cd5d2718b4d148fc61e27f6', 'c8ea0e2da6ef7d40c3fd8fda385b47a6efaaaa32', 'ffe33dce4e652a4dc4824cc39680a9f709cfdfb3', 'cf4e40ac9cca4c5536b4d4fb88febcd70d4cb71e', '99556dbb34dc3c34bca3b9fc91ae09b2a9441bbc', '68eaba5d57d10930b3ed037b117763b7a96e80a8', '25c85accee5b305d4738948c1c75d132e664f8a4', 'eb26a5c5a5e6f11914db419ddd15c61a958a5993', '85d0196bc97c7bed505fe9e0019ee105a83d74a7', 'b376bd39a8278a752243214d903bdf86ceb3e116', '297c6bff2c465087274332e3d173ca5a5faa49a6', '410bae5a457a88407f07370b65e2ee1c2614003d', '574c16866909a1bd77d52ee93835e157f10eaaae', '251873fe109daa232376e1f5f41fafc1ddd730d6', 'e6d2a452ae9ad5844e90af3c12622e15a9902f36', 'a61506e490781b9d12c46404e5b7cc7987168776', '3a0eeb047c884705cd1b80f92112cdc89c7ccfb7', '0a30797785588bbf76b08340c4ea033870da099c', 'bfe6664509430d7188aa2c8636d7571d211ddb7a', '0325c6f37767763065c82987e556e5ff61184149', '88b36a0aed9cb21fa0f2301708a6242d2ea422e9', '2236fd75d9c2bf0c59c215589e001e452f901f1b', '9d5d976251a616230670f51df5ed95451e6eec53', 'ca64844b02a1ca6b944a009c92b04653329c570f', '5ac3d27227225b4dc4cc22582f115ba84c902c6d', 'c48653c868a274494140980d2ea4dcd7153bcc0b', '5fa0e2c964dc57f8ff5fea88e7ec5f90a2973d8a', 'e9c89483094fdaba9fcbd11c7f3d46189840ea93', '81efbd343608f7631f29f10fc458db3518042c81', '18c43451c9719c946a73d3d655822d4ba5783ed5', '6952b87aedaaddb57f99c2207d0fac06ca1bd86f', '523b14b172f1d65c89f9c00205b429222e96ea26', 'd1d600beb26187e223e1a728910ccf6b51f05b0f', '26b3436fa160d40d339e92ce09660fd207067d39', 'fe086e16e62195b0d3d5985ea478fa836e0a6624', '054ef3fdf6c5bf88cd760c4c38d17480b338eee8', '76fcc71286c12d3197a38764e2a9613e4f3a33fc', '66e487d2db32f81c898dfb8fddf295ff59ad4286', 'eb7ffcc2b0642460c1bec03f3d83d115a7ebe68f', '2e663844654844e1a46be9ff19b3a80284f3900a', '0eecc0826501db429bc2a88f70159473bae08799', 'c4cb793ac0020119e9c47d8cb701bbb544f6c234', 'dfb04c4a166ddd0e53cafccb9f0540a7744e2346', '967d7c87d01145cf1a09a12cc666c144ab456fb7', '6a65851bf8ef01591a49dad322d88060d4755ac1', 'a77c3e4f481fdc1783ce4f44a6d5e612b7775c18', '7e3f6e77217967868c52338ebdc793b33ba28eb9', '656b85865fdf4a52fcaffc19ca8ab4990b66538a', '0c2d7feed4d9d1de1abff205eee2503161acabc0', '6cd1883ee5a6454c0e68209aafe07f1527d32536', '1a495dd4bb3e4ab4240cf9b9825c7361792cc5ea', '05223daa0cf7b83436ec1ebc0d0956a2e7d47b5f', '1421de1fcccf07c33e3a2200094f24d726430f56', '0c197d33983bd41c1aeb8329ae804a8ad15d3679', '0fec2d8d0f43fc72e2f1f8b482d34b6b825e6a4e', '851d86c64ffb5e8a3ece3978b447d007c33f7c80', ... ]"
+      ]
+     },
+     "execution_count": 34,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "foo['user_id'].unique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Taylor Swift: 3246"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "taylor = song_data[song_data['artist']=='Taylor Swift']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "dtype: str\n",
+       "Rows: 3246\n",
+       "['62c4bf887b7b1e5cf6ab62723481099c7f98377e', 'b7b5408ba99a68a4d8d9df6007e8516a8fabb43f', '92337c69d4ff1c13f5c9ad4e9c62a0654be9d230', 'e8813fe73c90d69b4f744251c68fce896ec2aede', 'd6dbb0578fe5baf513cad07fbf07801f89fd9313', '1c765481d4103de594ce8292b199cf7ce5aaf696', '9232eeaa942af2ff3f3e2b90f996d3ad003e4b31', '5d5e0142e54c3bb7b69f548c2ee55066c90700eb', '56df8017a3210df0806714dd7ca43755b33b27a1', '1d78cca2d2fa9c19bc9f73e721136fbebb2d8ed5', '8ab12a0531093fb7180cbc53cf6466fc913370e9', '9e02b9e44467fbe8fdca3c5724cba7cb34d55a1b', '06010bea94826f4b317ed734ef0e320364b7be39', '87c3ca32d1f6d7ccd66a1288b4ecc60b74983867', '9a660cd0e498aeb08cd6d8b62cddcc6762c541c6', '523dbe38910336a4d523f58a408d43f3576bd7e9', 'c8504ae53bce0a990140eaead1e5289efb1515f8', 'b8a378e53e8510ca8bde97a68ce3874417505e7d', '210f3a581078971a7b4ae481ab8411a4f7837cee', '85650cebb4809c45f2c8ea4a875b25f74eb379d9', 'ce437bd511ae1fb47cac33c55818395657eaa1cc', 'c9a6232343943de241f9601eeb175edaa838ea77', '2510038527855bd611844cce31164f71c42ce3ad', '708ae260f8ec276eae688a3f07d1eb0557d3c75b', '44a1668fd941e14bb1dffbe94248b680a97f87e2', '4a4709290b5d7e0b0bda6c70e6ee7e229be463ba', '86142ff8d467861bc66da4b32578b1206cb4ea32', 'ced33ee66eac5185e552941a0d987142f8ea8485', '461aca64a5aa057a68b6ca6421180b7b6a8a8638', 'e4f0bcd8e3c158d4e57b5921bb1bf3dd4c6d8474', '871d004a886a45317e425b5516ba3391b50e2443', '81dc734820377becec3d1dfddb29e17e5bc21be4', '79cf206518b9ed11266d827c8fde992951cd10c3', 'b8e3bbca98ae64a79896bb1d249aab0518f18403', 'aabb69c1fcb4beab8a9a3eb4a407bbb93d098b49', 'fd6b1d8a5bbc14051ec16746ca758ac45438e77d', 'b7317918075a3ae4d13d6979480ad31ecfea8d3e', '1857a65f676b708a693fdf795508e7e3aee5ba5f', 'd692a0009413452d79ecd25690194bf753e9beaa', 'e2898f4c1269031286cbfb2dfe9ffc24a99f5414', '423388b045af540a89b3eff1e1e6050a870ffc6f', 'd1811893801e61e36dc9d0d546c377c412abc738', 'bf2e572ca9d5e8fa1cf4e7b37fca61b26775c42c', 'ac8f6578a84ed23247640e0041ee4184fceb0666', 'c523e11567bd8c6237247896165c006c62394ee2', '68b88145be590317386fd49bb20fad0f2205c81b', 'b20aad581c0e6abdf83851d04477afd3af339bdc', '007c7b0ba56ff999e2992e4f122d2ab52eab40d3', 'd8eb815caa6d92afea03f9a3a73a63094fc2d754', 'fe3f58e594ef4aa8ccd82ba4a33aa1104c41e73e', '940ed4a83f5a3f9ac29d55a7d5b2e3b9cc55c3c5', 'ef32a5059dba28061597bd1e0bab22cb664c9820', '1550cce5c36d3a0520cc36c4f51ee75b99681b18', '1bbf10a2dd17ea484ff2e6e06b8be4ac86bec84e', 'b35d7a2c04018c2e3902f96cd1c25ac465a5f284', 'd8657c58b0b1d901e4f480428a7a008b17ec4d49', '573d35e6faf7ad5e9fa81bc68fa783f5e454361d', '70cdd10334a370a8e0e74ceaa6121ec3c2b4c3f3', '29577f2d5ceb4691e04fb927c7e573c3986e2fc3', '976dcc5e615b0b3a9a9efb1e44c26281ee1363c3', 'd0bc13d674faa9290c36d07ae83d6c4a394153a0', 'b17e086192c540907480c4140a3ada8036a33d1d', 'ca724b4619e880813cc8d86c9735f9439c6baf78', '2f8f89c0b7050f9cfc1753d8b360d0c69941d429', '4d9f1edb03cbcacc96bc5542a854f93d1782f870', 'd0c3cccd0d33a4f1363532f1f92fac73672f5e38', 'c76953a11e9adb309d9d662f59b618c10e69e8b3', 'c4e80d31c8368746717f9467a1c2b2edb59bdc1d', 'b1323e654c28c83c63791efc7a900284498ed04e', 'ce2c303298e8100658a015a0a3ec26bbc4c61b99', '30fc86ae206693802e22074b662b8f67f8f4ff44', '89d4bb93024199ce661f25258a8f6653338abc3b', '1a6e30fc40e40bdbbea46d3cbb1b4c7c8577f717', 'a3c46c746a77fa94296048fe97ae16f95925b933', '48fca5e60731517e9b1d8022835c24df196f52a9', 'a498a85e2bb584cf048a48c46e67d438e23c7f1b', '2a1deb9dff80739175fbd8120275747690ea7aa2', '2caecd422a0c13730c88a8d794b683efce5aff5d', 'd121b9f6c73fc5c9b9024e04e79e6451dd8195a0', 'c23149dd540ec769543c4ab914c274d4fbe1ed4a', '362c8626da119dd30a917dfd84bd9ec4e103506e', '579265cb0fce12e7049be7cc6a146332b3d9221d', '8ff5d72a8903e992509517167a74395c83ea4bc8', 'c86edf4d75c1ba07c51b48d85a975e47df6a5684', '11ec76b4b688e591ea3c90580d072833a7437496', '5a639c7026bbb2fbf17c37204a0d91a5419f3572', '83a101603c2df35126d4c9d6ee273a075f9e6de9', '52fb9d0c18bdfb2ebd1bb5739fa7b611f601584d', 'cba72289e962983cdb4a204141dc1c304c899335', 'c82ddfe4e0d54f326fffe770d373be7d4ab31bbd', '80045fc8235694630385b096f2894203c054f0b5', '236ca950eb8d1594217fa5e4ceb21d4529b2f432', 'f52bc501e1996190fcb93361ee3ebfb0174fa6bd', 'e6d2a452ae9ad5844e90af3c12622e15a9902f36', 'aa1be33fa05780d9b548226309cf67075148295c', '2bdce10a00344e0c4d27163b3bb22d37b80bae9f', '87888820d30fe929055b76ebd89b8a81faeec8fa', '842c8c4c632d46b0a2a9146a316a95cac6c38998', 'e082b930ca9d0cfaef131ddf197dfa4c6b7c507a', 'ee806855aa7c2d4c862e6e771e7271a50b139fd9', ... ]"
+      ]
+     },
+     "execution_count": 37,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "taylor['user_id'].unique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Lady GaGa: 2928"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gaga = song_data[song_data['artist']=='Lady GaGa']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "dtype: str\n",
+       "Rows: 2928\n",
+       "['b2b08a84654f90585e0dc3c5155d330fb8e4ba59', '2e9cbd200d67910aeb97b36efe9cd4341cc06030', 'fe85b96ba1983219b296f6b4869dd29eb2b72ff9', 'e8813fe73c90d69b4f744251c68fce896ec2aede', '181d9c254ff957a396b8bbcec10228f84cfa5c2c', '3a829c9fa2a7b69f4067260200d35cc1af84020d', '9232eeaa942af2ff3f3e2b90f996d3ad003e4b31', '5264bce396b58ba18b13fa8bc692b9e13095b238', '427f79a4116066653aa6959974f8a5986c2a8459', 'fa34b04be0338811ccaae543e0ea5f7f2573f23d', '57be59aea99414a297899a04fb469f7b46592fc4', '587d72d47d50a6940a78ff3fcd91caf8d4054c6a', 'e8fc7111df017488a7c6630dc0bab52931cab644', '6cde3794dd8b2862015d850127be9bc60f1b3c31', '12789b3b67efc997897d019fff50e226357ebbfd', '1d7b9780e492c062c739517c89e794985c7cf4bb', '1a8e700876bdab8669019bee20d193103f76ab92', '0125127617030cb2793e6944075d99046123c37e', '514033d39196cbe7ad55004ac3acc589c604335f', '85fa923067c8c77b348323ef0e83ce74ec0c0cc3', '6a76313bf4530b6aedd61c839e88bf6ac3e2611a', 'af54ada7e2c059f03b6e2f99dd9da8c15cd68123', 'ed1cc55c6ba13ec78c6a1979d70389b0739405c0', '5e937de20d11bcf16f29731c28428429794a0bc1', '423388b045af540a89b3eff1e1e6050a870ffc6f', 'a0001680c2487cf92ac9345bd707f414fd96a3a1', '58ea7b11bae17385192c890b35904fd7102acd7e', '63173e8d2219bf56b8102382fabef5f4bdfa41ed', '958b1f15d5c9c8db5ccf8bb736ac56334fa98874', 'fa5bcaea72c39370e973cb7c79f32eadc6bb96a5', 'ad9507f8752c3e4f6845748e83caffdfa4330c6c', '18aa240058a94b66d15a35722577e4081cb33e87', 'bf756e7786ae17147fb2acc684f6ad13de8112df', '4d51fbcc87703e3637849945ac9c6b88e8f6bd23', 'b9ba242a5c4b1b88a859bea6c1fec6cb3b1a1b7b', 'adb3f4541b3c13ba99629c0bcf7d15c76c6d8739', 'c843847f85d937eb663a2e2c5f94e5d5a52a36a2', '24a92ba5b42996dd0d3bdd390440d21387904d64', '5a703940aec877d1e29761628221bfa804ff1ed9', '22ba71d132cf63c3ecb48ebe7879518d6a7c2aa6', '940ed4a83f5a3f9ac29d55a7d5b2e3b9cc55c3c5', 'a827eb4304ba7152997238c855bfc4a243742f1e', '17d74167069086652181dbfc8e79a77da55b48d0', '74d9c0d397f89393af6c3a2eff986d335bbd5588', '587acb83a3fd81273dfcba4dcdb57bf2d0676cdf', '573d35e6faf7ad5e9fa81bc68fa783f5e454361d', 'bf03bbb01a7803ed1a5fec51bfe9423a79737d1a', 'd0bc13d674faa9290c36d07ae83d6c4a394153a0', 'c904f63a6854db1f2d335eaa334bd13bc7ef9a4a', '923cbd741c13c71fe4cf501eb23ee37fe2289f8f', 'b839f7e3cb4364969f1946d865fd830722b27ea5', '30fc86ae206693802e22074b662b8f67f8f4ff44', 'a0d5cd001da884b140a29386c15bcfef031147ff', 'a3c46c746a77fa94296048fe97ae16f95925b933', '97c2010569ebd85d41f071572a50f7af0789f8ab', 'b08da22d84185babe73d4b3a0581993c6dd19e76', 'c774bdca9e752195a81e211b99e029703562b998', 'c86edf4d75c1ba07c51b48d85a975e47df6a5684', 'f28fdcd44d43091374590210de637051f5e476de', '9b1e848501b108ccc26ff1a591534e0603b520cd', 'f11cd0dd6dd3635e1e9d981819017331cdaa1803', 'c6efa2a74985604be7138b20e0a4df51fb7f96bf', '84802753262605629889f1af1d80b7892ef53bef', '9f792978d58f5c146b46f6a56209a1e738b58b44', 'fb9e0279794959bb0ab893da9867327131e7ebc5', 'dcfc811fb2b41018853b5b96dd9791d1720848ec', 'cd517c5bbd067daa60c1ea7abefab25f11c182ac', 'df7559a12676263dad3af310d99dccc15e382a72', '5376d2121347cd905219f6739fd2c86cb16236c8', 'f81f097cf08893b2bcef121cded3c8d031ba0e3a', '9f6f1b2fd2ff81c4b90c7b823f610c65d73b8442', 'f2a80a1269fc2e8e1f94cd1d009aedf6a1124500', 'd7a47b0b8d5e18e7d39893988a7369ec0e9a659c', '035148f8b5470e76e874c0b9e6199f1aaa964c3e', '8b63b2d71dc845eb09af6ecc1c8ad27ba4f262ff', '118f4f0adc53ba694a6c672a6b291e2ae337ee7e', 'd84098ba557d3b6e8101d3771b51de8b74055850', '0325c6f37767763065c82987e556e5ff61184149', '8f2dc7d2e533e1807ac73761b7c2bcfcaaf0d64a', '7eb042bc442096bd65e4642b8e458463dec74bc9', 'cdd290321452c1554ec84aef79ae04df047a9eb1', '565d082f66eb38553671b3dd43e4ad314f4d2248', 'c48653c868a274494140980d2ea4dcd7153bcc0b', '428b763ee352383e249d315b1773ff174fdf3ccf', 'f146ca9b12d83286aabb3c8d2ab0d9f7ad6cd493', '51ecaaa7a2de04460f877ee77840bf5818cdf7b4', 'e9aa4800581734d688fc100b73fcf918f828e0f7', '17e1bd8db46948ab3bdc244685c51d5b6730fd63', '24c6d19239142a08a6ce11f8b82181f2ecd274cc', '3cbe0aae78f8062c21b99ffd50f1080a50c91f5c', '05c0dcea6310a9eabe015bf34eb71f63ece7a732', 'a4bae5159f2cf8d20569dcca0d05e9d377188e90', 'aede537e3211db537a052a0db7188c8a1088d4f9', '5330f698212dc8bbdc3c34fe1f60ff6469899e30', 'e64cf25bf64967a5735040dc3bf34866bb6aabf9', '9a4204b03508ae14f78b8f25bfc9133c0295e586', '0838c6464b54ca807f8aea92342fd45487687110', 'a8de8dcb4fc9049ff3b70db9db879c9ba3e4faac', 'aaf246c128ae96aaf1b50e44b0193d5ca28450fc', '9f34827289820bb4c47d2beea21aac6b552d49d1', ... ]"
+      ]
+     },
+     "execution_count": 40,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "gaga['user_id'].unique()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 2. Using .groupby() to find the most popular and least popular artist"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The .groupby method has two important parameters:\n",
+    "### i. key_columns, in our case, 'artist'\n",
+    "### ii. operations, in our case, we want to sum over the 'listen_count'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div style=\"max-height:1000px;max-width:1500px;overflow:auto;\"><table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">artist</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">total_count</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Kings Of Leon</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">43218</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Dwight Yoakam</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">40619</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Björk</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">38889</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Coldplay</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">35362</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Florence + The Machine</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">33387</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Justin Bieber</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">29715</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Alliance Ethnik</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">26689</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">OneRepublic</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">25754</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Train</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">25402</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">The Black Keys</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">22184</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "[3375 rows x 2 columns]<br/>Note: Only the head of the SFrame is printed.<br/>You can use print_rows(num_rows=m, num_columns=n) to print more rows and columns.\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Columns:\n",
+       "\tartist\tstr\n",
+       "\ttotal_count\tint\n",
+       "\n",
+       "Rows: 3375\n",
+       "\n",
+       "Data:\n",
+       "+------------------------+-------------+\n",
+       "|         artist         | total_count |\n",
+       "+------------------------+-------------+\n",
+       "|     Kings Of Leon      |    43218    |\n",
+       "|     Dwight Yoakam      |    40619    |\n",
+       "|         Björk          |    38889    |\n",
+       "|        Coldplay        |    35362    |\n",
+       "| Florence + The Machine |    33387    |\n",
+       "|     Justin Bieber      |    29715    |\n",
+       "|    Alliance Ethnik     |    26689    |\n",
+       "|      OneRepublic       |    25754    |\n",
+       "|         Train          |    25402    |\n",
+       "|     The Black Keys     |    22184    |\n",
+       "+------------------------+-------------+\n",
+       "[3375 rows x 2 columns]\n",
+       "Note: Only the head of the SFrame is printed.\n",
+       "You can use print_rows(num_rows=m, num_columns=n) to print more rows and columns."
+      ]
+     },
+     "execution_count": 50,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "song_data.groupby(key_column_names='artist', operations={'total_count': tc.aggregate.SUM('listen_count')}).sort('total_count',ascending=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div style=\"max-height:1000px;max-width:1500px;overflow:auto;\"><table frame=\"box\" rules=\"cols\">\n",
+       "    <tr>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">artist</th>\n",
+       "        <th style=\"padding-left: 1em; padding-right: 1em; text-align: center\">total_count</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">William Tabbert</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">14</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Reel Feelings</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">24</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Beyoncé feat. Bun B and<br>Slim Thug ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">26</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Diplo</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Boggle Karaoke</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">harvey summers</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Nâdiya</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">36</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Kanye West / Talib Kweli<br>/ Q-Tip / Common / ...</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">38</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Aneta Langerova</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">38</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">Jody Bernal</td>\n",
+       "        <td style=\"padding-left: 1em; padding-right: 1em; text-align: center; vertical-align: top\">38</td>\n",
+       "    </tr>\n",
+       "</table>\n",
+       "[3375 rows x 2 columns]<br/>Note: Only the head of the SFrame is printed.<br/>You can use print_rows(num_rows=m, num_columns=n) to print more rows and columns.\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Columns:\n",
+       "\tartist\tstr\n",
+       "\ttotal_count\tint\n",
+       "\n",
+       "Rows: 3375\n",
+       "\n",
+       "Data:\n",
+       "+-------------------------------+-------------+\n",
+       "|             artist            | total_count |\n",
+       "+-------------------------------+-------------+\n",
+       "|        William Tabbert        |      14     |\n",
+       "|         Reel Feelings         |      24     |\n",
+       "| Beyoncé feat. Bun B and Sl... |      26     |\n",
+       "|             Diplo             |      30     |\n",
+       "|         Boggle Karaoke        |      30     |\n",
+       "|         harvey summers        |      31     |\n",
+       "|             Nâdiya            |      36     |\n",
+       "| Kanye West / Talib Kweli /... |      38     |\n",
+       "|        Aneta Langerova        |      38     |\n",
+       "|          Jody Bernal          |      38     |\n",
+       "+-------------------------------+-------------+\n",
+       "[3375 rows x 2 columns]\n",
+       "Note: Only the head of the SFrame is printed.\n",
+       "You can use print_rows(num_rows=m, num_columns=n) to print more rows and columns."
+      ]
+     },
+     "execution_count": 51,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "song_data.groupby(key_column_names='artist', operations={'total_count': tc.aggregate.SUM('listen_count')}).sort('total_count',ascending=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Most popular: Kings of Leon, with 43218 total listens\n",
+    "### Least popular: William Tabbert, with 14 total listens"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "train_data, test_data"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
