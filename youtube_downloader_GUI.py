@@ -5,7 +5,9 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.checkbox import CheckBox
+from kivy.properties import ObjectProperty
 
 from kivy.config import Config
 Config.set('graphics', 'width', '400')
@@ -18,7 +20,7 @@ class MyGrid(GridLayout):
 		self.add_widget(Label(text="URL: "))
 		self.url = TextInput(multiline=False)
 		self.add_widget(self.url)
-		
+
 		self.download_a = Button(text="Download audio", font_size=20)
 		self.download_a.bind(on_press=self.pressed_audio)
 		self.add_widget(self.download_a)
@@ -32,6 +34,7 @@ class MyGrid(GridLayout):
 		format = 'm4a'
 		ydl_opts = {'noplaylist' : True}
 		ydl_opts['format'] = format
+		ydl_opts['outtmpl'] = f'~/Downloads/%(title)s.{format}'
 		with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 			print(f'DOWNLOADING... {format} format')
 			ydl.download([download_url])
@@ -43,6 +46,7 @@ class MyGrid(GridLayout):
 		format = 'mp4'
 		ydl_opts = {'noplaylist' : True}
 		ydl_opts['format'] = format
+		ydl_opts['outtmpl'] = f'~/Downloads/%(title)s.{format}'
 		with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 			print(f'DOWNLOADING... {format} format')
 			ydl.download([download_url])
