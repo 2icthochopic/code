@@ -24,4 +24,5 @@ print(fng)
 
 print()
 
+csv_writer.writerow([])
 csv_writer.writerow([date, fng])
