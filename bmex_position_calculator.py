@@ -31,11 +31,15 @@ rr = abs(avgEntry - avgTP) / abs(avgEntry - stopLoss)
 # Then it figures out max drawdown (aka % to stop loss)
 mdd = abs(avgEntry - stopLoss)*100 / avgEntry
 # USD worth of entire account?
-equity = float(input('Total equity? (Total Account Value in USD) '))
+equity = float(input('Total equity? '))
 # How much of equity to risk on this one trade?
-risk = float(input('Risk %? (How much of equity to risk on this one trade) '))*0.01
+risk = float(input('Risk %? '))*0.01
 leverage = round((risk * equity) / (mdd * 0.01) / equity, 2)
+if leverage > 100:
+	leverage = 100
 contracts = round((risk * equity) / (mdd * 0.01))
+if contracts > leverage * equity:
+	contracts = leverage * equity
 
 # long or short?
 if avgEntry > avgTP:
@@ -45,9 +49,11 @@ else:
 	longed = True
 	trade_direction = 'LONG POSITION'
 
-browser = webdriver.Chrome('/Users/JonathanMac/Dev/code/chromedriver')
+options = Options()
+options.headless = True
+browser = webdriver.Chrome('/Users/JonathanMac/Dev/code/chromedriver',options=options)
+browser.implicitly_wait(30)
 browser.get('https://www.bitmex.com/app/trade/XBTUSD')
-time.sleep(3)
 
 side_bar = browser.find_element_by_css_selector('.orderOptionsDropdown .dropdown-toggle-icon')
 side_bar.click()
@@ -114,5 +120,4 @@ print(f"Liquidation Price: {position_liquidation_price}  {safety}")
 print("Max Drawdown: {}%".format(round(mdd, 2)))
 print("R:R: {}".format(round(rr, 2)))
 print("-------------------------")
-
-
+clear_command = input("clear?")
